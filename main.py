@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 
 #get API_KEY from https://www.exchangerate-api.com/
-api = '5b928b7d8567da03de2d4cda'
+api = '000000000000000000000000'
 
 
 
