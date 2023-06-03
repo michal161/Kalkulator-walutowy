@@ -11,14 +11,14 @@ api = '5b928b7d8567da03de2d4cda'
 
 
 def main():
-    v = 5
+    v = 9
     pair = 'nie podany'
     data = 'n/a'
     kurs = 0.00
 
-    while v !=0:
+    while v !=0 and len(api) == 24:
         os.system('cls')
-        print("aktualna para:",pair,"\naktualny kurs: ",kurs,"\nwybierz opcję:\n    1. wybierz parę\n    2. oblicz kurs\n    3. odwróć parę\n    4. dane z api\n    0. wyjście", sep="")
+        print("aktualna para:",pair,"\naktualny kurs: ",kurs,"\nwybierz opcję:","\n1. wybierz parę","\n2. oblicz kurs","\n3. odwróć parę".center(20),"\n4. dane z api","\n0. wyjście", sep="")
         v = int(input())
         if v == 1:
             os.system('cls')
@@ -36,7 +36,7 @@ def main():
             else:
                 kurs = data['conversion_rate']
 
-        elif v == 2 and kurs == 0:
+        elif v == 2 and kurs == 0 or v == 3 and kurs == 0:
             os.system('cls')
             print("nie podałeś pary")
             time.sleep(2)
@@ -64,6 +64,9 @@ def main():
         
         elif v == 4:
             spr()
+
+        elif v == 5:
+            mult()
 
         elif v == 0:
             break
@@ -99,6 +102,28 @@ def spr():
     print("data następnego resetu:",d1, sep=" ")
     print("zostało",odl.days,"dni do resetu liczbę requestów", sep=" ")
     input("wciśnij dowolny przycisk, aby kontynuować...")
+
+def mult():
+    l = 0
+    waluty = {}
+
+    m = int(input("ile walut na raz chcesz obliczyć?"))
+    p = input('wprowadź początkową walutę skrótowo np. PLN: ')
+    ile = int(input("podaj kwotę: "))
+    while l < m and len(waluta) == 3:
+        waluta = input('wprowadź kolejną walutę skrótowo np. EUR: ')
+        url = 'https://v6.exchangerate-api.com/v6/'+api+'/latest/'+waluta
+        odp = requests.get(url)
+        dane = odp.json()
+        kurs = dane[p]
+        war = ile * kurs
+        waluty[waluta, kurs] = war  
+        l += 1
+    else:
+        print("nie prawidłowa waluta")
+    for waluta in waluty.items():
+        print("para", p,'-',waluta,"przy kursie", kurs, "wynosi", war, sep=" ")
+
 
 
 if __name__ == '__main__':
